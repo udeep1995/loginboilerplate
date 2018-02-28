@@ -5,17 +5,21 @@ const envFile = require('node-env-file');
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 try{
-  const file = envFile(path.join(__dirname, './../config/'+ process.env.NODE_ENV + '.env'));
-  process.env.API_KEY = file.API_KEY;
-  process.env.AUTH_DOMAIN = file.AUTH_DOMAIN;
-  process.env.PROJECT_ID = file.PROJECT_ID;
-  process.env.DATABASE_URL = file.DATABASE_URL;
-  process.env.STORAGE_BUCKET = file.STORAGE_BUCKET;
-  process.env.MESSAGING_SENDER_ID = file.MESSAGING_SENDER_ID;
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
+      const file = envFile(path.join(__dirname, './../config/'+ process.env.NODE_ENV + '.env'));
+      process.env.API_KEY = file.API_KEY;
+      process.env.AUTH_DOMAIN = file.AUTH_DOMAIN;
+      process.env.PROJECT_ID = file.PROJECT_ID;
+      process.env.DATABASE_URL = file.DATABASE_URL;
+      process.env.STORAGE_BUCKET = file.STORAGE_BUCKET;
+      process.env.MESSAGING_SENDER_ID = file.MESSAGING_SENDER_ID;
 }
 catch(e){
-  throw e;
+
 }
+
 
 const app = express();
 
